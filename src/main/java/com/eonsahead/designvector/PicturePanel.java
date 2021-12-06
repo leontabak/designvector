@@ -13,18 +13,32 @@ public class PicturePanel extends JPanel {
     // TO-DO: Try a different background color.
     private static final Color BG_COLOR = new Color(180, 248, 224);
     // TO-DO: Try assigning other values to STEPS.
-    private static final int STEPS = 8;
+    private static final int STEPS = 5;
 
     public PicturePanel() {
         this.setBackground(BG_COLOR);
     } // PicturePanel()
 
-    private double radius(double angle) {
+    private final double radius(double angle) {
         // TO-DO: Try making the radius a different
         // function of the angle.
         return 0.5;
     } // radius( double )
 
+    // TO-DO: Try making x() and y() different
+    // functions of radius and angle.
+    // TO-DO: Might it be useful to add an integer
+    // parameter to these methods? This parameter's
+    // value could be a measure of which step in the
+    // drawing of the figure we are executing.
+    private final double x( double radius, double angle ) {
+        return radius * Math.cos( angle );
+    } // x( double, double )
+    
+    private final double y( double radius, double angle ) {
+        return radius * Math.sin( angle );
+    } // y( double, double )
+    
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -34,13 +48,14 @@ public class PicturePanel extends JPanel {
         int h = this.getHeight();
 
         List<Vector2D> points = new ArrayList<>();
+        double radius = 0.5;
         for (int i = 0; i < STEPS; i++) {
             double angle = ((double) i) / STEPS * 2.0 * Math.PI;
             
             // Convert polar coordinates (radius, angle)
             // to Cartesian coordinates (x, y).
-            double x = radius(angle) * Math.cos(angle);
-            double y = radius(angle) * Math.sin(angle);
+            double x = x( radius, angle );
+            double y = y( radius, angle );
             points.add(new Vector2D(x, y));
         } // for
 
